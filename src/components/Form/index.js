@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { SearchAction } from '../../store/Actions/SearchAction'
-import { makeStyles, TextField, Button } from '@material-ui/core';
+import { makeStyles, TextField, Button,FormControl, InputLabel, Select } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 
@@ -24,7 +24,7 @@ const Form = ({searchAction}) => {
       ciudad:'',
       pais:''
     })
-
+    
     const addSearch = (event) =>{
 
       console.log(event.target.value)
@@ -33,12 +33,15 @@ const Form = ({searchAction}) => {
         [event.target.name]: event.target.value
       })
     }
-
+    
     const handleSubmit = (e) =>{
 
       e.preventDefault();
-      searchAction()
-      console.log('form')
+      searchAction(search)
+      SetSearch({
+        ciudad:'',
+        pais:''
+      })
     }
 
 
@@ -52,13 +55,32 @@ const Form = ({searchAction}) => {
                 onChange={addSearch}
                 name='ciudad'
             />
-            <TextField 
-                id="outlined-basic" 
-                label="Pais" 
-                name='pais'
-                variant="outlined" 
+            
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel htmlFor="outlined-age-native-simple">Selecciona un pais</InputLabel>
+              <Select
+                native
+                value={search.pais}
                 onChange={addSearch}
-            />
+                label="Age"
+                inputProps={{
+                  name: 'pais',
+                  id: 'outlined-age-native-simple',
+                }}
+              >
+                <option value=''></option>
+                <option value='US'>Estados Unidos</option>
+                <option value='MX'>Mexico</option>
+                <option value='AR'>Argentina</option>
+                <option value='CO'>Colombia</option>
+                <option value='CR'>Costa Rica</option>
+                <option value='ES'>España</option>
+                <option value='PE'>Perú</option>
+                <option value='VE'>Venezuela</option>
+              </Select>
+            </FormControl>
+
+
             <Button 
               variant="contained"
               color="primary"
@@ -67,16 +89,14 @@ const Form = ({searchAction}) => {
               >
               Buscar
             </Button>
-            <Button size="small" className={classes.margin}>
-              Small
-            </Button>
+            
         </form>
     )
 }
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    searchAction: ()=> dispatch(SearchAction())
+    searchAction: (search)=> dispatch(SearchAction(search))
   }
 }
 
