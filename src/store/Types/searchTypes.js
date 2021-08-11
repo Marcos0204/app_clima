@@ -1,0 +1,2 @@
+
+export const SEARCHPOST ='SEARCHPOST'

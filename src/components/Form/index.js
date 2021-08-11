@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
-
+import { SearchAction } from '../../store/Actions/SearchAction'
 import { makeStyles, TextField, Button } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Form = () => {
+const Form = ({searchAction}) => {
 
     const [ search, SetSearch ] = useState({
       ciudad:'',
@@ -32,8 +35,9 @@ const Form = () => {
     }
 
     const handleSubmit = (e) =>{
-      e.preventDefault();
 
+      e.preventDefault();
+      searchAction()
       console.log('form')
     }
 
@@ -70,4 +74,13 @@ const Form = () => {
     )
 }
 
-export default Form
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    searchAction: ()=> dispatch(SearchAction())
+  }
+}
+
+export default connect(
+  (state)=>(state),
+  mapDispatchToProps
+  )(Form)
