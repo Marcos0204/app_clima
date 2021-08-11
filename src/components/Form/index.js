@@ -54,6 +54,7 @@ const Form = ({searchAction}) => {
                 variant="outlined" 
                 onChange={addSearch}
                 name='ciudad'
+                value={search.ciudad}
             />
             
             <FormControl variant="outlined" className={classes.formControl}>
